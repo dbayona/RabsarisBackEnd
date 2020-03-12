@@ -33,6 +33,9 @@ module.exports = (app) => {
     //List all hours
     app.route('/hours/all').get(action.list_hours);
 
+    //Update Hours Details
+    app.route('/hours/details/update').put(action.update_hours_details_employee);
+
     //List all clubs
     app.route('/clubs/all').get(action.list_clubs);
 

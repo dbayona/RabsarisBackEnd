@@ -155,6 +155,22 @@ Employee.getAllHour = (result) => {
     });
 };
 
+// Actualizar las horas trabajadas de empleado
+Employee.putUpdateHoursDetails = (data, result) => {
+    // console.log('appModel - putUpdateHoursDetails');
+    // console.log(JSON.stringify(data));
+    let sp_query = `SET @data = ?; CALL updateHoursDetailsJSON(@data, @responsecode, @message); select @responsecode as responsecode, @message as message`;
+    sql.query(sp_query, [JSON.stringify(data)], (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+        } else {
+            console.log("Update Hours Details Employee: " + res);
+            result(null, res);
+        }
+    });
+};
+
 //Listar todos los empleados
 Employee.getAllClub = (result) => {
     let sp_query = `CALL allClub(@responsecode, @message); select @responsecode as responsecode, @message as message`;
