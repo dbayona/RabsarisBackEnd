@@ -157,8 +157,8 @@ Employee.getAllHour = (result) => {
 
 // Actualizar las horas trabajadas de empleado
 Employee.putUpdateHoursDetails = (data, result) => {
-    // console.log('appModel - putUpdateHoursDetails');
-    // console.log(JSON.stringify(data));
+    console.log('appModel - putUpdateHoursDetails');
+    console.log(JSON.stringify(data));
     let sp_query = `SET @data = ?; CALL updateHoursDetailsJSON(@data, @responsecode, @message); select @responsecode as responsecode, @message as message`;
     sql.query(sp_query, [JSON.stringify(data)], (err, res) => {
         if (err) {
@@ -196,6 +196,49 @@ Employee.putUpdateClub = (data, result) => {
             result(null, err);
         } else {
             console.log("Update Club: " + res);
+            result(null, res);
+        }
+    });
+};
+
+//Listar toda la planilla de los empleados
+Employee.getAllPayroll = (result) => {
+    let sp_query = `CALL allPayroll(@responsecode, @message); select @responsecode as responsecode, @message as message`;
+    sql.query(sp_query, true, (err, res, fields) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+        } else {
+            console.log("Get All Hours: ", res);
+            result(null, res);
+        }
+    });
+};
+
+//Listar toda la planilla de los empleados
+Employee.postPayrollDetails = (data, result) => {
+    console.log("####### " + data.id_hour);
+    let sp_query = `CALL payrollDetails(?, @responsecode, @message); select @responsecode as responsecode, @message as message`;
+    sql.query(sp_query, [data.id_hour], (err, res, fields) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+        } else {
+            console.log("Post All Hours: ", res);
+            result(null, res);
+        }
+    });
+};
+
+//Listar toda la planilla de los empleados
+Employee.getPayrollByEmployee = (data, result) => {
+    let sp_query = `CALL payrollDetailsByEmployee(?, ?, @responsecode, @message); select @responsecode as responsecode, @message as message`;
+    sql.query(sp_query, [data.id_hour, data.id_emp], (err, res, fields) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+        } else {
+            console.log("Get All Hours: ", res);
             result(null, res);
         }
     });

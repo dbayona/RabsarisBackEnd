@@ -234,18 +234,8 @@ exports.update_hours_details_employee = (req, res) => {
         jsondata.responsecode = employee[2][0].responsecode;
         jsondata.message = employee[2][0].message;
 
-        /*if (employee === null) {
-            jsondata.data = null;
-        } else {
-            jsondata.data = {
-                id_hour: employee[2][0].id_hour,
-                id_emp: employee[2][0].id_emp
-            };
-        }*/
-
         jsondata.data = null;
 
-        //res.send(employee);
         res.json(jsondata);
     });
 };
@@ -273,8 +263,6 @@ exports.list_clubs = (req, res) => {
 
 // Update Employee by id
 exports.update_club = (req, res) => {
-    console.log("Req.body --> ");
-    console.log(req.body);
     Employee.putUpdateClub(req.body, (err, employee) => {
         console.log('controller');
 
@@ -293,6 +281,69 @@ exports.update_club = (req, res) => {
         }
 
         //res.send(employee);
+        res.json(jsondata);
+    });
+};
+
+// List all Hours
+exports.list_payroll = (req, res) => {
+    Employee.getAllPayroll((err, employee) => {
+        console.log('controller');
+
+        if (err)
+            jsondata.error = err;
+        console.log('res', employee);
+
+        jsondata.responsecode = employee[2][0].responsecode;
+        jsondata.message = employee[2][0].message;
+
+        if (employee[0] == null) {
+            jsondata.data = null;
+        } else {
+            jsondata.data = employee[0];
+        }
+        res.json(jsondata);
+    });
+};
+
+// List Payroll Details
+exports.list_payroll_details = (req, res) => {
+    Employee.postPayrollDetails(req.body, (err, employee) => {
+        console.log('controller');
+
+        if (err)
+            jsondata.error = err;
+        console.log('res', employee);
+
+        jsondata.responsecode = employee[2][0].responsecode;
+        jsondata.message = employee[2][0].message;
+
+        if (employee[0] == null) {
+            jsondata.data = null;
+        } else {
+            jsondata.data = employee[0];
+        }
+        res.json(jsondata);
+    });
+};
+
+// List Payroll Details
+exports.list_payroll_by_employee = (req, res) => {
+    Employee.getPayrollByEmployee(req.body, (err, employee) => {
+        console.log('controller');
+
+        if (err)
+            jsondata.error = err;
+        console.log('res', employee);
+
+        jsondata.responsecode = employee[2][0].responsecode;
+        jsondata.message = employee[2][0].message;
+
+        if (employee[0] == null) {
+            jsondata.data = null;
+        } else {
+            jsondata.data = employee[0][0];
+        }
         res.json(jsondata);
     });
 };

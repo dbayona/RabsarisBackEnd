@@ -41,4 +41,13 @@ module.exports = (app) => {
 
     //Update a club by id
     app.route('/clubs/update/').put(action.update_club);
+
+    //List all payroll
+    app.route('/payroll/all').get(action.list_payroll);
+
+    //List all payroll details
+    app.route('/payroll/details').post(action.list_payroll_details);
+
+    //List payroll details by employee
+    app.route('/payroll/detail/employee').post(action.list_payroll_by_employee);
 };
